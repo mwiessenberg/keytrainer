@@ -1,0 +1,47 @@
+.mainPane {
+    -fx-background-color: black;
+}
+
+.round-red {
+    -fx-background-color: linear-gradient(#ff5400, #be1d00);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-text-fill: white;
+}
+
+.toggle-button:selected {
+    -fx-background-color: linear-gradient(#ff5400, #be1d00);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-text-fill: white;
+}
+
+.toggle-button {
+    -fx-background-color: linear-gradient(#998b82, #8d827e);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-text-fill: #bcbcbc;
+}
+
+#key-timesup {
+    -fx-fill: linear-gradient(#ff5400, #be1d00);
+}
+
+#key {
+    /*-fx-fill: linear-gradient(#ffffff, #8d827e);*/
+    -fx-fill: linear-gradient(#66ff6b, #068d0f);
+}
+
+#nextKey {
+    -fx-fill: linear-gradient(#66ff6b, #068d0f)
+}
+
+.check-box {
+    -fx-text-fill: #bcbcbc;
+}
+.label {
+    -fx-text-fill: #bcbcbc;
+}
+.counterText {
+    -fx-text-fill: #bcbcbc;
+}

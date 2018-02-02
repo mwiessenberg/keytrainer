@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox prefHeight="523.0" prefWidth="873.0" styleClass="mainPane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.wiessenberg.keytrainer.Controller">
+   <children>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" styleClass="mainPane" VBox.vgrow="ALWAYS">
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+         <bottom>
+            <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="startStopButton" mnemonicParsing="false" onAction="#startOrStop" styleClass="round-red" text="Start" textAlignment="CENTER" />
+                  <Button mnemonicParsing="false" onAction="#closeApplication" styleClass="round-red" text="Exit" textAlignment="CENTER" />
+               </children>
+            </HBox>
+         </bottom>
+         <top>
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ToggleButton fx:id="buttonA" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="A" />
+                  <ToggleButton fx:id="buttonBFlat" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="Bb" />
+                  <ToggleButton fx:id="buttonB" mnemonicParsing="false" prefWidth="60.0" selected="true" styleClass="round-red" text="B/Cb" />
+                  <ToggleButton fx:id="buttonC" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="C" />
+                  <ToggleButton fx:id="buttonCSharp" mnemonicParsing="false" prefWidth="60.0" selected="true" styleClass="round-red" text="C#/Db" />
+                  <ToggleButton fx:id="buttonD" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="D" />
+                  <ToggleButton fx:id="buttonEFlat" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="Eb" />
+                  <ToggleButton fx:id="buttonE" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="E" />
+                  <ToggleButton fx:id="buttonF" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="F" />
+                  <ToggleButton fx:id="buttonFSharp" mnemonicParsing="false" prefWidth="60.0" selected="true" styleClass="round-red" text="F#/Gb" />
+                  <ToggleButton fx:id="buttonG" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="G" />
+                  <ToggleButton fx:id="buttonAFlat" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="Ab" />
+                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+                     <children>
+                        <CheckBox fx:id="major" mnemonicParsing="false" selected="true" text="Major" />
+                        <CheckBox fx:id="minor" mnemonicParsing="false" selected="true" text="Minor" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </VBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Slider fx:id="timeSlider" blockIncrement="15.0" majorTickUnit="10.0" max="300.0" min="11.0" minorTickCount="30" snapToTicks="true" value="30.0" />
+                        <Label fx:id="timeLabel" />
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets top="5.0" />
+               </padding>
+            </HBox>
+         </top>
+         <center>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Text fx:id="countdown" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="00:00">
+                     <font>
+                        <Font size="64.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="activeKey" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="key">
+                     <font>
+                        <Font size="250.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="nowPlaying" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="nextKey" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="key">
+                     <font>
+                        <Font name="System Italic" size="100.0" />
+                     </font>
+                  </Text>
+               </children>
+            </VBox>
+         </center>
+      </BorderPane>
+   </children>
+</VBox>
