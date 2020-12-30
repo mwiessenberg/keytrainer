@@ -2,7 +2,7 @@
 
 This application will confront you with a random key signature and loops a backing track with it. After some (configurable)
 time period, a new key is randomly chosen, playing a different key accordingly.
-The currenly played key is displayed big on screen, and 10 seconds before the new key will be played, the next key will
+The currently played key is displayed big on screen, and 10 seconds before the new key will be played, the next key will
 be displayed as an announcement.
 
 # Prerequisites

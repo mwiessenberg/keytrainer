@@ -9,10 +9,25 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+    private FXMLLoader fxmlLoader;
 
+    public Main() {
+        fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("keytrainer.fxml"));
+
+        final Thread mainThread = Thread.currentThread();
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                ((Controller)fxmlLoader.getController()).storeApplicationPreferences();
+                mainThread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }));
+
+    }
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("keytrainer.fxml"));
+        Parent root = fxmlLoader.load();
         primaryStage.setTitle("Key Trainer");
         primaryStage.setScene(new Scene(root, 800, 600));
 
