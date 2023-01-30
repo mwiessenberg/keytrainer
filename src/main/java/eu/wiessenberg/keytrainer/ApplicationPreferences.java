@@ -33,6 +33,22 @@ public class ApplicationPreferences {
         prefs.putBoolean("minor", enabled);
     }
 
+    public void storeBackingTracks(boolean enabled) {
+        prefs.putBoolean("backingTracks", enabled);
+    }
+
+    public boolean isBackingTracksEnabled() {
+        return prefs.getBoolean("backingTracks", true);
+    }
+
+    public void storeLoop(boolean enabled) {
+        prefs.putBoolean("loop", enabled);
+    }
+
+    public boolean isLoopEnabled() {
+        return prefs.getBoolean("loop", true);
+    }
+
     public boolean isMajorEnabled() {
         return prefs.getBoolean("major", true);
     }

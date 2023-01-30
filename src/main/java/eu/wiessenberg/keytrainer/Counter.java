@@ -13,7 +13,7 @@ public class Counter {
     private List<CounterListener> listeners = new ArrayList<>();
     private List<Long> triggers = new ArrayList<>();
 
-    private Timer timer = new Timer(false);
+    private Timer timer;
 
     public Counter(long timeInSeconds) {
         this.timeInSeconds = timeInSeconds;
@@ -28,6 +28,7 @@ public class Counter {
     }
 
     public void start() {
+        timer = new Timer(false);
         timer.schedule(new CounterTask(), 1000, 1000);
         running = true;
     }

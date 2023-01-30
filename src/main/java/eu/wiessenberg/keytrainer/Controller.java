@@ -14,21 +14,19 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.prefs.Preferences;
 
 public class Controller implements Counter.CounterListener {
     @FXML private Slider timeSlider;
 
     @FXML private Label timeLabel;
     @FXML private Button startStopButton;
+    @FXML private Button pauseButton;
 
     @FXML private ToggleButton buttonAFlat;
     @FXML private ToggleButton buttonA;
     @FXML private ToggleButton buttonASharp;
     @FXML private ToggleButton buttonBFlat;
     @FXML private ToggleButton buttonB;
-    @FXML private ToggleButton buttonBSharp;
-    @FXML private ToggleButton buttonCFlat;
     @FXML private ToggleButton buttonC;
     @FXML private ToggleButton buttonCSharp;
     @FXML private ToggleButton buttonDFlat;
@@ -36,8 +34,6 @@ public class Controller implements Counter.CounterListener {
     @FXML private ToggleButton buttonDSharp;
     @FXML private ToggleButton buttonEFlat;
     @FXML private ToggleButton buttonE;
-    @FXML private ToggleButton buttonESharp;
-    @FXML private ToggleButton buttonFFlat;
     @FXML private ToggleButton buttonF;
     @FXML private ToggleButton buttonFSharp;
     @FXML private ToggleButton buttonGFlat;
@@ -45,19 +41,25 @@ public class Controller implements Counter.CounterListener {
     @FXML private ToggleButton buttonGSharp;
     @FXML private CheckBox major;
     @FXML private CheckBox minor;
+    @FXML private CheckBox backingTracks;
+    @FXML private CheckBox loop;
     @FXML private Text countdown;
     @FXML private Text activeKey;
     @FXML private Text nextKey;
     @FXML private Text nowPlaying;
     @FXML private Text chordProgression;
     @FXML private Text loopDescription;
+
     private String nextKeyDescr;
 
     private long timerInSeconds = 30L;
     private Counter counter;
+    private long startTime;
     private MediaPlayer mediaPlayer = new MediaPlayer();
 
     private List<ToggleButton> allKeySignatures = new ArrayList<>();
+
+    private List<ToggleButton> keyBucket = new ArrayList<>();
 
     @FXML
     public void closeApplication() {
@@ -69,21 +71,23 @@ public class Controller implements Counter.CounterListener {
         allKeySignatures.add(buttonAFlat);
         allKeySignatures.add(buttonA);
         allKeySignatures.add(buttonASharp);
+
         allKeySignatures.add(buttonBFlat);
         allKeySignatures.add(buttonB);
-        allKeySignatures.add(buttonBSharp);
-        allKeySignatures.add(buttonCFlat);
+
         allKeySignatures.add(buttonC);
         allKeySignatures.add(buttonCSharp);
+
         allKeySignatures.add(buttonDFlat);
         allKeySignatures.add(buttonD);
         allKeySignatures.add(buttonDSharp);
+
         allKeySignatures.add(buttonEFlat);
         allKeySignatures.add(buttonE);
-        allKeySignatures.add(buttonESharp);
-        allKeySignatures.add(buttonFFlat);
+
         allKeySignatures.add(buttonF);
         allKeySignatures.add(buttonFSharp);
+
         allKeySignatures.add(buttonGFlat);
         allKeySignatures.add(buttonG);
         allKeySignatures.add(buttonGSharp);
@@ -104,7 +108,10 @@ public class Controller implements Counter.CounterListener {
     }
 
     private String getNextKey() {
-        return getNextKeySignature() + " " + getNextMinorOrMajor();
+        if (!keyBucket.isEmpty()) {
+            return getNextKeySignature() + " " + getNextMinorOrMajor();
+        }
+        return null;
     }
 
     private void updateKeyLabel(String nextKeySignature) {
@@ -125,16 +132,28 @@ public class Controller implements Counter.CounterListener {
         }
     }
 
-    private String getNextKeySignature() {
-        List<ToggleButton> activatedKeys = new ArrayList<>();
+    private void highlightKeys() {
         for (ToggleButton key: allKeySignatures) {
-            if (key.isSelected()) {
-                activatedKeys.add(key);
+            if (keyBucket.contains(key)) {
+                key.setId("in-bucket");
+            } else {
+                key.setId("");
             }
         }
+    }
 
-        int nextKeyIndex = activatedKeys.size() > 1 ? (new Random().nextInt() & Integer.MAX_VALUE) % (activatedKeys.size() - 1): 0;
-        ToggleButton nextKey = activatedKeys.get(nextKeyIndex);
+    private void fillBucket() {
+        for (ToggleButton key : allKeySignatures) {
+            if (key.isSelected()) {
+                keyBucket.add(key);
+            }
+        }
+    }
+    private String getNextKeySignature() {
+        int nextKeyIndex = keyBucket.size() > 1 ? (new Random().nextInt() & Integer.MAX_VALUE) % (keyBucket.size() - 1): 0;
+        ToggleButton nextKey = keyBucket.get(nextKeyIndex);
+        keyBucket.remove(nextKeyIndex);
+
         return nextKey.getText();
     }
 
@@ -144,43 +163,102 @@ public class Controller implements Counter.CounterListener {
     }
 
     @FXML
+    private void pause() {
+        if (counter.isRunning()) {
+            counter.stop();
+            setButtonsAsPaused();
+        } else {
+            counter.start();
+            setButtonsAsResumed();
+        }
+    }
+
+    @FXML
     private void startOrStop() {
         if (counter != null && counter.isRunning()) {
             counter.stop();
             mediaPlayer.stopAllLoops();
-            setStartStopButtonAsStopped();
+            keyBucket.clear();
+            highlightKeys();
+            setButtonsAsStopped();
+            updateLoopProperties(null);
             updateNowPlayingLabel(null);
         } else {
+            fillBucket();
+
             nextKeyDescr = getNextKey();
+            highlightKeys();
+            updateLoopProperties(null);
             updateKeyLabel(nextKeyDescr);
+
+            startTime = System.currentTimeMillis();
+
             start();
         }
     }
 
-    private void setStartStopButtonAsStopped() {
+    private void setButtonsAsStopped() {
         startStopButton.setText("Start");
+        startStopButton.getStyleClass().remove("started");
+        startStopButton.getStyleClass().add("stopped");
+        pauseButton.setDisable(true);
     }
 
-    private void setStartStopButtonAsStarted() {
+    private void setButtonsAsStarted() {
         startStopButton.setText("Stop");
+        startStopButton.getStyleClass().remove("stopped");
+        startStopButton.getStyleClass().add("started");
+        pauseButton.setDisable(false);
+        pauseButton.requestFocus();
+    }
+
+    private void setButtonsAsPaused() {
+        startStopButton.setDisable(true);
+        pauseButton.getStyleClass().remove("resumed");
+        pauseButton.getStyleClass().add("paused");
+        pauseButton.setText("Resume");
+    }
+
+    private void setButtonsAsResumed() {
+        startStopButton.setDisable(false);
+        pauseButton.getStyleClass().remove("paused");
+        pauseButton.getStyleClass().add("resumed");
+        pauseButton.setText("Pause");
     }
 
     private void start() {
+        System.out.println("start");
+
         counter = new Counter(timerInSeconds);
         counter.addListener(this);
-        counter.addTimeTrigger(10);
+        counter.addTimeTrigger(5);
         counter.start();
 
         activeKey.setId("key");
 
-        setStartStopButtonAsStarted();
+        setButtonsAsStarted();
 
         mediaPlayer.stopAllLoops();
-        playLoop();
+
+        if (backingTracks.isSelected()) {
+            playLoop();
+        }
+    }
+
+    private void stop() {
+        counter.stop();
+        setButtonsAsStopped();
+        mediaPlayer.stopAllLoops();
+
+        long duration = System.currentTimeMillis() - startTime;
+        activeKey.setId("finished");
+        activeKey.setText("Finished");
+        countdown.setText("total time " + StringUtils.formatTime(duration/1000));
+        nextKey.setText(null);
     }
 
     private void playLoop() {
-        URL url = Thread.currentThread().getContextClassLoader().getResource("loops/test");
+        URL url = getClass().getClassLoader().getResource("loops/test/");
         System.out.println("looking for loops in " + url);
         if (url != null) {
             Loop loop = Loop.getRandomLoop(new File(url.getFile()), activeKey.getText());
@@ -218,8 +296,12 @@ public class Controller implements Counter.CounterListener {
     @Override
     public void onCountedDownToZero() {
         updateKeyLabel(nextKeyDescr);
-        nextKey.setText(null);
-        start();
+        if (!loop.isSelected() && keyBucket.isEmpty() && nextKey.getText().isEmpty()) {
+            stop();
+        } else {
+            nextKey.setText(null);
+            start();
+        }
     }
 
     @Override
@@ -234,8 +316,14 @@ public class Controller implements Counter.CounterListener {
     @Override
     public void onTimeTrigger(long secondsRemaining) {
         nextKeyDescr = getNextKey();
-        nextKey.setText("Up next: " + nextKeyDescr);
+        nextKey.setText(nextKeyDescr != null ? "Up next: " + nextKeyDescr: null);
         activeKey.setId("key-timesup");
+
+        highlightKeys();
+
+        if (loop.isSelected() && keyBucket.isEmpty()) {
+            fillBucket();
+        }
     }
 
     private void restoreApplicationPreferences() {
@@ -248,6 +336,8 @@ public class Controller implements Counter.CounterListener {
 
         minor.setSelected(prefs.isMinorEnabled());
         major.setSelected(prefs.isMajorEnabled());
+        backingTracks.setSelected(prefs.isBackingTracksEnabled());
+        loop.setSelected(prefs.isLoopEnabled());
 
         timeSlider.setValue(prefs.getDuration());
     }
@@ -262,6 +352,8 @@ public class Controller implements Counter.CounterListener {
 
         prefs.storeMinor(minor.isSelected());
         prefs.storeMajor(major.isSelected());
+        prefs.storeBackingTracks(backingTracks.isSelected());
+        prefs.storeLoop(loop.isSelected());
 
         prefs.storeDuration(timeSlider.getValue());
     }

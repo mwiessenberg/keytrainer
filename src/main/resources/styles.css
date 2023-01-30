@@ -9,6 +9,22 @@
     -fx-text-fill: white;
 }
 
+.started {
+    -fx-background-color: linear-gradient(#ff5400, #be1d00);
+}
+
+.stopped {
+    -fx-background-color: linear-gradient(#2dff00, #00770d);
+}
+
+.resumed {
+    -fx-background-color: linear-gradient(#000dd3, #079cff);
+}
+
+.paused {
+    -fx-background-color: linear-gradient(#079cff, #000dd3);
+}
+
 .toggle-button:selected {
     -fx-background-color: linear-gradient(#ff5400, #be1d00);
     -fx-background-radius: 30;
@@ -23,13 +39,22 @@
     -fx-text-fill: #bcbcbc;
 }
 
+#in-bucket {
+    -fx-border-color:yellow;
+}
+
 #key-timesup {
     -fx-fill: linear-gradient(#ff5400, #be1d00);
 }
 
 #key {
-    /*-fx-fill: linear-gradient(#ffffff, #8d827e);*/
     -fx-fill: linear-gradient(#66ff6b, #068d0f);
+}
+
+#finished {
+    -fx-fill: linear-gradient(#ffffff, #98ff9b);
+    -fx-stroke: #66ff6b;
+    -fx-stroke-width: 2px;
 }
 
 #nextKey {

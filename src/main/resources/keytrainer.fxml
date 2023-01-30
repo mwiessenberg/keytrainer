@@ -27,8 +27,17 @@
          <bottom>
             <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="startStopButton" mnemonicParsing="false" onAction="#startOrStop" styleClass="round-red" text="Start" textAlignment="CENTER" />
-                  <Button mnemonicParsing="false" onAction="#closeApplication" styleClass="round-red" text="Exit" textAlignment="CENTER" />
+                  <Button fx:id="startStopButton" mnemonicParsing="false" onAction="#startOrStop" text="Start" textAlignment="CENTER">
+                     <styleClass>
+                        <String fx:value="round-red" />
+                        <String fx:value="stopped" />
+                     </styleClass></Button>
+                  <Button fx:id="pauseButton" disable="true" layoutX="569.0" layoutY="83.0" mnemonicParsing="false" onAction="#pause" text="Pause" textAlignment="CENTER">
+                     <styleClass>
+                        <String fx:value="round-red" />
+                        <String fx:value="resumed" />
+                     </styleClass></Button>
+                  <Button focusTraversable="false" mnemonicParsing="false" onAction="#closeApplication" styleClass="round-red" text="Exit" textAlignment="CENTER" />
                </children>
             </HBox>
          </bottom>
@@ -75,13 +84,13 @@
                      <children>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <ToggleButton fx:id="buttonA" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="A" />
-                              <ToggleButton fx:id="buttonB" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="B" />
-                              <ToggleButton fx:id="buttonC" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="C" />
-                              <ToggleButton fx:id="buttonD" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="D" />
-                              <ToggleButton fx:id="buttonE" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="E" />
-                              <ToggleButton fx:id="buttonF" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="F" />
-                              <ToggleButton fx:id="buttonG" layoutX="840.0" layoutY="15.0" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="G" />
+                              <ToggleButton fx:id="buttonA" focusTraversable="false" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="A" />
+                              <ToggleButton fx:id="buttonB" focusTraversable="false" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="B" />
+                              <ToggleButton fx:id="buttonC" focusTraversable="false" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="C" />
+                              <ToggleButton fx:id="buttonD" focusTraversable="false" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="D" />
+                              <ToggleButton fx:id="buttonE" focusTraversable="false" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="E" />
+                              <ToggleButton fx:id="buttonF" focusTraversable="false" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="F" />
+                              <ToggleButton fx:id="buttonG" focusTraversable="false" layoutX="840.0" layoutY="15.0" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="G" />
                            </children>
                            <padding>
                               <Insets top="5.0" />
@@ -89,20 +98,16 @@
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <ToggleButton fx:id="buttonAFlat" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="Ab" />
-                              <ToggleButton fx:id="buttonASharp" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="A#" />
-                              <ToggleButton fx:id="buttonBFlat" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="Bb" />
-                              <ToggleButton fx:id="buttonBSharp" mnemonicParsing="false" prefWidth="60.0" selected="true" styleClass="round-red" text="B#" />
-                              <ToggleButton fx:id="buttonCFlat" mnemonicParsing="false" prefWidth="60.0" selected="true" styleClass="round-red" text="Cb" />
-                              <ToggleButton fx:id="buttonCSharp" mnemonicParsing="false" prefWidth="60.0" selected="true" styleClass="round-red" text="C#" />
-                              <ToggleButton fx:id="buttonDFlat" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="Db" />
-                              <ToggleButton fx:id="buttonDSharp" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="D#" />
-                              <ToggleButton fx:id="buttonEFlat" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="Eb" />
-                              <ToggleButton fx:id="buttonESharp" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="E#" />
-                              <ToggleButton fx:id="buttonFFlat" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="Fb" />
-                              <ToggleButton fx:id="buttonFSharp" mnemonicParsing="false" prefWidth="60.0" selected="true" styleClass="round-red" text="F#" />
-                              <ToggleButton fx:id="buttonGFlat" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="Gb" />
-                              <ToggleButton fx:id="buttonGSharp" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="G#" />
+                              <ToggleButton fx:id="buttonAFlat" focusTraversable="false" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="A♭" />
+                              <ToggleButton fx:id="buttonASharp" focusTraversable="false" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="A♯" />
+                              <ToggleButton fx:id="buttonBFlat" focusTraversable="false" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="B♭" />
+                              <ToggleButton fx:id="buttonCSharp" focusTraversable="false" mnemonicParsing="false" prefWidth="60.0" selected="true" styleClass="round-red" text="C♯" />
+                              <ToggleButton fx:id="buttonDFlat" focusTraversable="false" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="D♭" />
+                              <ToggleButton fx:id="buttonDSharp" focusTraversable="false" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="D♯" />
+                              <ToggleButton fx:id="buttonEFlat" focusTraversable="false" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="E♭" />
+                              <ToggleButton fx:id="buttonFSharp" focusTraversable="false" mnemonicParsing="false" prefWidth="60.0" selected="true" styleClass="round-red" text="F♯" />
+                              <ToggleButton fx:id="buttonGFlat" focusTraversable="false" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="G♭" />
+                              <ToggleButton fx:id="buttonGSharp" focusTraversable="false" mnemonicParsing="false" prefWidth="40.0" selected="true" styleClass="round-red" text="G♯" />
                            </children>
                         </HBox>
                      </children>
@@ -111,10 +116,12 @@
                <right>
                   <HBox prefHeight="67.0" prefWidth="379.0" BorderPane.alignment="CENTER">
                      <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+                        <VBox prefHeight="67.0" prefWidth="125.0" spacing="5.0">
                            <children>
-                              <CheckBox fx:id="major" mnemonicParsing="false" selected="true" text="Major" />
-                              <CheckBox fx:id="minor" mnemonicParsing="false" selected="true" text="Minor" />
+                              <CheckBox fx:id="major" focusTraversable="false" mnemonicParsing="false" selected="true" text="Major" />
+                              <CheckBox fx:id="minor" focusTraversable="false" mnemonicParsing="false" selected="true" text="Minor" />
+                              <CheckBox fx:id="backingTracks" focusTraversable="false" mnemonicParsing="false" text="Backing tracks" />
+                              <CheckBox fx:id="loop" focusTraversable="false" mnemonicParsing="false" text="Loop" />
                            </children>
                            <opaqueInsets>
                               <Insets />
@@ -128,7 +135,7 @@
                         </VBox>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Slider fx:id="timeSlider" blockIncrement="15.0" majorTickUnit="10.0" max="300.0" min="11.0" minorTickCount="30" snapToTicks="true" value="30.0" />
+                              <Slider fx:id="timeSlider" blockIncrement="15.0" focusTraversable="false" majorTickUnit="10.0" max="300.0" min="1.0" minorTickCount="30" snapToTicks="true" value="30.0" />
                               <Label fx:id="timeLabel" />
                            </children>
                         </HBox>
