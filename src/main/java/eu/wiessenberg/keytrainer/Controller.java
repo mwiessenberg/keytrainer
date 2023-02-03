@@ -47,8 +47,6 @@ public class Controller implements Counter.CounterListener {
     @FXML private Text activeKey;
     @FXML private Text nextKey;
     @FXML private Text nowPlaying;
-    @FXML private Text chordProgression;
-    @FXML private Text loopDescription;
 
     private String nextKeyDescr;
 
@@ -122,7 +120,7 @@ public class Controller implements Counter.CounterListener {
         boolean pickMajor = new Random().nextBoolean();
 
         if (major.isSelected() && minor.isSelected()) {
-            return pickMajor ? "Major": "minor";
+            return pickMajor ? "Major": "Minor";
         } else if (major.isSelected()){
             return "Major";
         } else if (minor.isSelected()) {
@@ -181,14 +179,12 @@ public class Controller implements Counter.CounterListener {
             keyBucket.clear();
             highlightKeys();
             setButtonsAsStopped();
-            updateLoopProperties(null);
             updateNowPlayingLabel(null);
         } else {
             fillBucket();
 
             nextKeyDescr = getNextKey();
             highlightKeys();
-            updateLoopProperties(null);
             updateKeyLabel(nextKeyDescr);
 
             startTime = System.currentTimeMillis();
@@ -258,12 +254,11 @@ public class Controller implements Counter.CounterListener {
     }
 
     private void playLoop() {
-        URL url = getClass().getClassLoader().getResource("loops/test/");
+        URL url = getClass().getClassLoader().getResource("wave-loops/");
         System.out.println("looking for loops in " + url);
         if (url != null) {
             Loop loop = Loop.getRandomLoop(new File(url.getFile()), activeKey.getText());
             updateNowPlayingLabel(loop);
-            updateLoopProperties(loop);
 
             if (loop != null) {
                 mediaPlayer.playLoop(loop.getFile());
@@ -277,19 +272,9 @@ public class Controller implements Counter.CounterListener {
 
     private void updateNowPlayingLabel(Loop loop) {
         if (loop != null) {
-            nowPlaying.setText(String.format("Now playing: \"%s\", %s bpm", loop.getName(), loop.getBpm()));
+            nowPlaying.setText(String.format("Now playing: \"%s\"", loop.getName()));
         } else {
             nowPlaying.setText(null);
-        }
-    }
-
-    private void updateLoopProperties(Loop loop) {
-        if (loop != null && loop.getProperties() != null) {
-            chordProgression.setText(String.format("Chord progression: %s", loop.getProperties().getChordProgression()));
-            loopDescription.setText(loop.getProperties().getDescription());
-        } else {
-            chordProgression.setText(null);
-            loopDescription.setText(null);
         }
     }
 

@@ -1,25 +1,18 @@
 package eu.wiessenberg.keytrainer;
 
 import java.io.File;
+import java.util.Locale;
 import java.util.Random;
 
 public class Loop {
-    private File file;
-    private String key;
-    private String name;
-    private String bpm;
-    private LoopProperties properties;
+    private final File file;
+    private final String key;
+    private final String name;
 
-    private Loop(File file, LoopProperties properties, String key, String name, String bpm) {
+    private Loop(File file, String key, String name) {
         this.file = file;
-        this.properties = properties;
         this.key = key;
         this.name = name;
-        this.bpm = bpm;
-    }
-
-    public LoopProperties getProperties() {
-        return properties;
     }
 
     File getFile() {
@@ -34,22 +27,13 @@ public class Loop {
         return name;
     }
 
-    String getBpm() {
-        return bpm;
-    }
-
     private static Loop fromFile(File file) {
         String[] parts = file.getName().split("[._]+");
-        return new Loop(file, getLoopProperties(file), parts[0], parts[1], parts[2]);
-    }
-
-    private static LoopProperties getLoopProperties(File loopFile) {
-        File propertiesFile = new File(loopFile.getParent() + File.separator + loopFile.getName().substring(0, loopFile.getName().indexOf('.')) + ".properties");
-        return propertiesFile.exists() ? LoopProperties.fromPropertyFile(propertiesFile): null;
+        return new Loop(file, parts[0], parts[1]);
     }
 
     public static Loop getRandomLoop(File path, String key) {
-        File[] files = path.listFiles(file -> file.getName().startsWith(key) && file.getName().endsWith(".wav"));
+        File[] files = path.listFiles(file -> file.getName().toLowerCase().startsWith(key.toLowerCase()) && file.getName().endsWith(".wav"));
         System.out.println("Found " + files.length + " loops for key " + key);
         if (files.length > 0) {
             File randomFile = files[Math.abs(new Random().nextInt()) % files.length];

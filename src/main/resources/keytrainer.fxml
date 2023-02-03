@@ -59,16 +59,6 @@
                         <Font size="36.0" />
                      </font>
                   </Text>
-                  <Text fx:id="chordProgression" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
-                     <font>
-                        <Font size="36.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="loopDescription" fill="WHITE" layoutX="447.0" layoutY="459.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1200.0">
-                     <font>
-                        <Font name="System Italic" size="24.0" />
-                     </font>
-                  </Text>
                   <Text fx:id="nextKey" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="key">
                      <font>
                         <Font name="System Italic" size="100.0" />

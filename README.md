@@ -17,4 +17,4 @@ run `mvn clean package` to build the project. The result is a self-executable ja
 # Loops
 I've added a couple of loops that will be used as the backing track (in `src/resources/loops`), but you can add your own.
 Make sure you follow this format, so the application will pick the correct loop for the active key:
-    `<key>_<title or discription of the song>_<bpm>`
+    `<key>_<title or discription of the song>`
